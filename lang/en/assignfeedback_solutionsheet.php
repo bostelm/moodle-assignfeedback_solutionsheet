@@ -23,7 +23,7 @@
  */
 
 
-$string['pluginname'] = 'Solution sheets';
+$string['pluginname'] = 'Solution sheet';
 /* ------------------------------------------------------------ */
 $string['solutionsheet:viewsolution'] = 'View solution sheets after the deadline';
 $string['solutionsheet:viewsolutionanytime'] = 'View solution sheets at any time';
@@ -32,6 +32,7 @@ $string['default'] = 'Enabled by default';
 $string['default_help'] = 'If set, solutionsheet upload will be enabled by default for all new assignments.';
 $string['enabled'] = 'Solution sheets';
 $string['enabled_help'] = 'If enabled, the teacher can upload one or more solution sheets for this assignment. ';
+$string['enabled_link'] = 'assignfeedback/solutionsheet';
 $string['dohidesolutions'] = 'Click to hide the solutions from students.';
 $string['doshowsolutions'] = 'Click to show the solutions to students now.';
 $string['hidesolutionsafter'] = 'Hide solutions after';
@@ -41,7 +42,7 @@ $string['solutionsfrom'] = 'The solutions will be available from {$a}.';
 $string['solutionsnolonger'] = 'The solutions are no longer available.';
 $string['solutionsnotforstudents'] = '<strong>Note:</strong> Students can <strong>not</strong> currently access the solutions. ';
 $string['solutionsnotyet'] = 'The solutions are not yet available.';
-$string['uploadsolutionsheets'] = 'Upload solution sheet';
+$string['uploadsolutionsheets'] = 'Upload solution sheets';
 $string['yesimmediate'] = 'Yes, from now on';
 $string['yesfromprefix'] = 'Yes, ';
 $string['yesfromsuffix'] = 'after the due date';
