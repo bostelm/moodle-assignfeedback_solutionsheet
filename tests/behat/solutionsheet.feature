@@ -27,7 +27,7 @@ Feature: In an assignment, teachers can upload solution sheets
     And I click on "Edit settings" "link" in the "Administration" "block"
     And I follow "Expand all"
     And I set the field "assignfeedback_solutionsheet_enabled" to "1"
-    And I upload "mod/assign/feedback/solutionsheet/tests/fixtures/solutionsheet.txt" file to "Upload solution sheet" filemanager
+    And I upload "mod/assign/feedback/solutionsheet/tests/fixtures/solutionsheet.txt" file to "Upload solution sheets" filemanager
     And I press "Save and display"
     And I log out
 
@@ -151,6 +151,7 @@ Feature: In an assignment, teachers can upload solution sheets
       | assignfeedback_solutionsheet_hideafter[year]    | 2010 |    
     And I press "Save and display"
     Then I should see "The solutions are no longer available"
+    And I should not see "Click to hide the solutions"
     And I log out
     
     When I log in as "student1"
