@@ -321,4 +321,13 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
         return new action_link($url, $text);
     }
 
+    /**
+     * Do not show this plugin in the grading table or on the front page.
+     *
+     * @return bool
+     */
+    public function has_user_summary() {
+        return false;
+    }
 }
+
