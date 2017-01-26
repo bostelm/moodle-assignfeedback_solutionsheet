@@ -22,7 +22,7 @@ time after the assignment due date. In addition, the solution can be hidden
 after a configurable cutoff date.
 
 For further information, please see:
-    http://docs.moodle.org/31/en/Solution_sheets
+    http://docs.moodle.org/32/en/Solution_sheet
 
 === Installation instructions ===
 
