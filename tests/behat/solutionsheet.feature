@@ -24,7 +24,7 @@ Feature: In an assignment, teachers can upload solution sheets
       | Description                      | Questions here        |
       | allowsubmissionsfromdate[year]   | 2009                  |
     And I follow "Test assignment name"
-    And I click on "Edit settings" "link" in the "Administration" "block"
+    And I navigate to "Edit settings" in current page administration
     And I follow "Expand all"
     And I set the field "assignfeedback_solutionsheet_enabled" to "1"
     And I upload "mod/assign/feedback/solutionsheet/tests/fixtures/solutionsheet.txt" file to "Upload solution sheets" filemanager
@@ -82,7 +82,7 @@ Feature: In an assignment, teachers can upload solution sheets
     When I log in as "teacher1"
     And I follow "Course 1"
     And I follow "Test assignment name"
-    And I click on "Edit settings" "link" in the "Administration" "block"
+    And I navigate to "Edit settings" in current page administration
     And I follow "Expand all"
     And I set the following fields to these values:
       | duedate[day]   | 1    |    
@@ -107,7 +107,7 @@ Feature: In an assignment, teachers can upload solution sheets
     When I log in as "teacher1"
     And I follow "Course 1"
     And I follow "Test assignment name"
-    And I click on "Edit settings" "link" in the "Administration" "block"
+    And I navigate to "Edit settings" in current page administration
     And I follow "Expand all"
     And I set the following fields to these values:
       | duedate[year]  | 2010 |
@@ -141,7 +141,7 @@ Feature: In an assignment, teachers can upload solution sheets
     When I log in as "teacher1"
     And I follow "Course 1"
     And I follow "Test assignment name"
-    And I click on "Edit settings" "link" in the "Administration" "block"
+    And I navigate to "Edit settings" in current page administration
     And I follow "Expand all"
     And I click on "Yes, from now on" "radio"
     And I set the following fields to these values:
@@ -164,7 +164,7 @@ Feature: In an assignment, teachers can upload solution sheets
     When I log in as "teacher1"
     And I follow "Course 1"
     And I follow "Test assignment name"
-    And I click on "Edit settings" "link" in the "Administration" "block"
+    And I navigate to "Edit settings" in current page administration
     And I follow "Expand all"
     And I set the following fields to these values:
       | assignfeedback_solutionsheet_hideafter[day]    | 1    |    
