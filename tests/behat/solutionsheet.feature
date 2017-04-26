@@ -17,8 +17,7 @@ Feature: In an assignment, teachers can upload solution sheets
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
     And I log in as "teacher1"
-    And I follow "Course 1"
-    And I turn editing mode on
+    And I am on "Course 1" course homepage with editing mode on
     And I add a "Assignment" to section "1" and I fill the form with:
       | Assignment name                  | Test assignment name  |
       | Description                      | Questions here        |
@@ -34,14 +33,14 @@ Feature: In an assignment, teachers can upload solution sheets
   @javascript
   Scenario: A teacher can show and hide the solution sheet.
     When I log in as "student1"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     Then I should see "The solutions are not yet available"
     And I should not see "solutionsheet.txt"
     And I log out    
   
     When I log in as "teacher1"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     Then I should see "Solution sheets"
     And I should see "solutionsheet.txt"
@@ -56,13 +55,13 @@ Feature: In an assignment, teachers can upload solution sheets
     And I log out
 
     When I log in as "student1"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     Then I should see "solutionsheet.txt"
     And I log out   
     
     When I log in as "teacher1"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     And I follow "Click to hide the solutions"
     Then I should see "Changes saved"
@@ -71,7 +70,7 @@ Feature: In an assignment, teachers can upload solution sheets
     And I log out
     
     When I log in as "student1"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     Then I should see "The solutions are not yet available"
     And I should not see "solutionsheet.txt"
@@ -80,7 +79,7 @@ Feature: In an assignment, teachers can upload solution sheets
   @javascript
   Scenario: A teacher can set the solutions to be available after the deadline.
     When I log in as "teacher1"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     And I navigate to "Edit settings" in current page administration
     And I follow "Expand all"
@@ -98,14 +97,14 @@ Feature: In an assignment, teachers can upload solution sheets
     And I log out
     
     When I log in as "student1"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     Then I should see "The solutions will be available from Monday, 11 February 2030"
     And I should not see "solutionsheet.txt"
     And I log out
     
     When I log in as "teacher1"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     And I navigate to "Edit settings" in current page administration
     And I follow "Expand all"
@@ -116,13 +115,13 @@ Feature: In an assignment, teachers can upload solution sheets
     And I log out
     
     When I log in as "student1"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     Then I should see "solutionsheet.txt"
     And I log out    
     
     When I log in as "teacher1"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     And I follow "Click to hide the solutions"
     Then I should see "Changes saved"
@@ -130,7 +129,7 @@ Feature: In an assignment, teachers can upload solution sheets
     And I log out
     
     When I log in as "student1"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     Then I should see "The solutions are not yet available"
     And I should not see "solutionsheet.txt"
@@ -139,7 +138,7 @@ Feature: In an assignment, teachers can upload solution sheets
   @javascript
   Scenario: A teacher can hide the solution sheets after a defined date.
     When I log in as "teacher1"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     And I navigate to "Edit settings" in current page administration
     And I follow "Expand all"
@@ -155,14 +154,14 @@ Feature: In an assignment, teachers can upload solution sheets
     And I log out
     
     When I log in as "student1"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     Then I should see "The solutions are no longer available"
     And I should not see "solutionsheet.txt"
     And I log out
     
     When I log in as "teacher1"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     And I navigate to "Edit settings" in current page administration
     And I follow "Expand all"
@@ -175,7 +174,7 @@ Feature: In an assignment, teachers can upload solution sheets
     And I log out
     
     When I log in as "student1"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     Then I should see "solutionsheet.txt"
     And I log out    
