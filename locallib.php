@@ -311,6 +311,12 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
         return $result;
     }
 
+    /**
+     * Construct a link for showing/hiding the solution sheet.
+     *
+     * @param bool $showit whether the link is for showing (true) or hiding (false)
+     * @return action_link
+     */
     private function get_solutions_showhide_link ($showit) {
         $params = array('cmid' => $this->assignment->get_course_module()->id,
                         'show' => $showit,
