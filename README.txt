@@ -22,7 +22,7 @@ time after the assignment due date. In addition, the solution can be hidden
 after a configurable cutoff date.
 
 For further information, please see:
-    http://docs.moodle.org/32/en/Solution_sheet
+    http://docs.moodle.org/33/en/Solution_sheet
 
 === Installation instructions ===
 
@@ -33,7 +33,7 @@ be located at: mod/assign/feedback/solutionsheet/README.txt
 For further installation instructions please see:
     http://docs.moodle.org/en/Installing_plugins
 
-This plugin is intended for Moodle 3.2 and above.
+This plugin is intended for Moodle 3.3 and above.
 
 === Authors ===
 
@@ -41,6 +41,10 @@ Current maintainer:
  Henning Bostelmann, University of York <henning.bostelmann@york.ac.uk>
 
 === Release notes ===
+
+--- Version 3.3 ---
+
+Minor fixes and updated behat tests.
 
 --- Version 3.2 ---
 
