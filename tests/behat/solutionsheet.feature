@@ -87,6 +87,7 @@ Feature: In an assignment, teachers can upload solution sheets
       | duedate[day]   | 1    |    
       | duedate[month] | 2    |
       | duedate[year]  | 2030 |
+      | gradingduedate[enabled] | 0 |
     And I click on "id_assignfeedback_solutionsheet_showattype_2" "field"
     And I set the following fields to these values:
       | assignfeedback_solutionsheet_showattime[number]   | 10   |    
