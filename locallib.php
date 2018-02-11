@@ -311,6 +311,12 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
         return $result;
     }
 
+    /**
+     * Generate show / hide link for sultions.
+     *
+     * @param bool $showit Determine which link to generate.
+     * @return moodle_url The show/ hide link.
+     */
     private function get_solutions_showhide_link ($showit) {
         $params = array('cmid' => $this->assignment->get_course_module()->id,
                         'show' => $showit,
