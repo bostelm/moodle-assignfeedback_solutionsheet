@@ -181,7 +181,7 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
             }
             if ($this->can_students_view_solutions()) {
                 // If students can see the solutions, we may want to hide them.
-                if (has_capability('moodle/course:manageactivities', $context)) {
+                if (has_capability('assignfeedback/solutionsheet:releasesolution', $context)) {
                     $o .= html_writer::div(
                                 $renderer->render($this->get_solutions_showhide_link(false)),
                                 'solutionshowhide');
@@ -190,7 +190,7 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
                 if ($this->can_view_solutions() && !$this->is_solution_hidden_again()) {
                     // Print a notice to teachers, and possibly a "show" link.
                     $s = get_string('solutionsnotforstudents', 'assignfeedback_solutionsheet');
-                    if (has_capability('moodle/course:manageactivities', $context)) {
+                    if (has_capability('assignfeedback/solutionsheet:releasesolution', $context)) {
                         $s .= $renderer->render($this->get_solutions_showhide_link(true));
                     }
                     $o .= html_writer::div($s, 'solutionshowhide');

@@ -27,6 +27,7 @@ $string['pluginname'] = 'Solution sheet';
 /* ------------------------------------------------------------ */
 $string['solutionsheet:viewsolution'] = 'View solution sheets after the deadline';
 $string['solutionsheet:viewsolutionanytime'] = 'View solution sheets at any time';
+$string['solutionsheet:releasesolution'] = 'Release solution sheets at any time';
 /* ------------------------------------------------------------ */
 $string['default'] = 'Enabled by default';
 $string['default_help'] = 'If set, solutionsheet upload will be enabled by default for all new assignments.';
