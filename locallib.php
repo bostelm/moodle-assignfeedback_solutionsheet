@@ -323,7 +323,7 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
                         'sesskey' => sesskey() );
         $url = new moodle_url('/mod/assign/feedback/solutionsheet/showsolutions.php', $params);
 
-        if ($showit){
+        if ($showit) {
             $stringid = 'doshowsolutions';
             $confirmid = 'confirmshowsolutions';
         } else {
