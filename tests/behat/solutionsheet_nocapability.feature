@@ -1,5 +1,5 @@
 @assignfeedback @assignfeedback_solutionsheet
-Feature: In an assignment, teachers can upload solution sheets
+Feature: In an assignment, teachers can not upload solution sheets without capability
   In order to provide solutions
   As a teacher
   I need to upload the solution sheet.
