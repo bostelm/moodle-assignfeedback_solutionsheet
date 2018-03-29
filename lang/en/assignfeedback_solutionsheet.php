@@ -22,6 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Solution sheet';
 /* ------------------------------------------------------------ */
@@ -33,8 +34,8 @@ $string['default'] = 'Enabled by default';
 $string['default_help'] = 'If set, solutionsheet upload will be enabled by default for all new assignments.';
 $string['enabled'] = 'Solution sheets';
 $string['enabled_help'] = 'If enabled, the teacher can upload one or more solution sheets for this assignment.';
-$string['enabled'] = 'Enable from now on';
-$string['enabled_help'] = 'If enabled, the teacher can select showing the solution sheet immediately at assignment creation time.';
+$string['fromnowon'] = 'Enable from now on';
+$string['fromnowon_help'] = 'If enabled, a teacher can select showing the solution sheet immediately at assignment creation time.';
 $string['enabled_link'] = 'assignfeedback/solutionsheet';
 $string['dohidesolutions'] = 'Click to hide the solutions from students.';
 $string['doshowsolutions'] = 'Click to show the solutions to students now.';
