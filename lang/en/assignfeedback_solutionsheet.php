@@ -52,3 +52,5 @@ $string['uploadsolutionsheets'] = 'Upload solution sheets';
 $string['yesimmediate'] = 'Yes, from now on';
 $string['yesfromprefix'] = 'Yes, ';
 $string['yesfromsuffix'] = 'after the due date';
+$string['confirmtitle'] = 'Confirmation';
+$string['confirmtext'] = 'Are you sure you want to show solutions to students from now on?';

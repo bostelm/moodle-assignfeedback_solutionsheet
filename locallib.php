@@ -84,6 +84,7 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
      * @return void
      */
     public function get_settings(MoodleQuickForm $mform) {
+        global $PAGE;
 
         $defaultshowattype = $this->get_config('showattype');
         $defaultshowattime = $this->get_config('showattime');
@@ -98,6 +99,7 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
         $showatgroup[] = $mform->createElement('radio', 'assignfeedback_solutionsheet_showattype', null, get_string('no'), 0);
 
         if ($this->should_display_yesimmediate()) {
+            $PAGE->requires->js_call_amd('assignfeedback_solutionsheet/settings_form', 'init');
             $showatgroup[] = $mform->createElement('radio', 'assignfeedback_solutionsheet_showattype', null,
                 get_string('yesimmediate', 'assignfeedback_solutionsheet'), 1);
         }
