@@ -37,5 +37,5 @@ $settings->add(new admin_setting_configcheckbox(
         'assignfeedback_solutionsheet/fromnowon',
         new lang_string('fromnowon', 'assignfeedback_solutionsheet'),
         new lang_string('fromnowon_help', 'assignfeedback_solutionsheet'),
-        0 // Default to off.
+        1 // Default to on.
         ));
