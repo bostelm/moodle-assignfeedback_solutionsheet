@@ -96,8 +96,12 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
 
         $showatgroup = array();
         $showatgroup[] = $mform->createElement('radio', 'assignfeedback_solutionsheet_showattype', null, get_string('no'), 0);
-        $showatgroup[] = $mform->createElement('radio', 'assignfeedback_solutionsheet_showattype', null,
-                                                get_string('yesimmediate', 'assignfeedback_solutionsheet'), 1);
+
+        if ($this->should_display_yesimmediate()) {
+            $showatgroup[] = $mform->createElement('radio', 'assignfeedback_solutionsheet_showattype', null,
+                get_string('yesimmediate', 'assignfeedback_solutionsheet'), 1);
+        }
+
         $showatgroup[] = $mform->createElement('radio', 'assignfeedback_solutionsheet_showattype', null,
                                                 get_string('yesfromprefix', 'assignfeedback_solutionsheet'), 2);
         $showatgroup[] = $mform->createElement('duration', 'assignfeedback_solutionsheet_showattime', '');
@@ -123,6 +127,29 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
                         get_string('hidesolutionsafter', 'assignfeedback_solutionsheet'),
                         array ('optional' => true) );
         $mform->setDefault('assignfeedback_solutionsheet_hideafter', $defaulthideafter);
+    }
+
+    /**
+     * Check if we should display "yesimmediate" radio option.
+     *
+     * @return bool|mixed
+     * @throws \dml_exception
+     */
+    protected function should_display_yesimmediate() {
+        if ($this->is_updating_assignment()) {
+            return true;
+        }
+
+        return get_config('assignfeedback_solutionsheet', 'fromnowon');
+    }
+
+    /**
+     * Check if we are updating an assignment.
+     *
+     * @return bool
+     */
+    protected function is_updating_assignment() {
+        return $this->assignment->has_instance();
     }
 
     /**
