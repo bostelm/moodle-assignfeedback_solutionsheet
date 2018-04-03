@@ -152,6 +152,8 @@ Feature: In an assignment, teachers can upload solution sheets
     And I navigate to "Edit settings" in current page administration
     And I follow "Expand all"
     And I click on "Yes, from now on" "radio"
+    Then I should see "Are you sure you want to show solutions to students from now on?"
+    When I press "Yes"
     And I set the following fields to these values:
       | assignfeedback_solutionsheet_hideafter[enabled] | 1    |
       | assignfeedback_solutionsheet_hideafter[day]     | 1    |
