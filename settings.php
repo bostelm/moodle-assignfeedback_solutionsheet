@@ -24,9 +24,18 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+// Is Solution sheet feedback enabled.
 $settings->add(new admin_setting_configcheckbox(
                    'assignfeedback_solutionsheet/default',
                    new lang_string('default', 'assignfeedback_solutionsheet'),
                    new lang_string('default_help', 'assignfeedback_solutionsheet'),
                    1
                ));
+
+// Is "Yes, from now on" option available at assignment creation.
+$settings->add(new admin_setting_configcheckbox(
+        'assignfeedback_solutionsheet/fromnowon',
+        new lang_string('fromnowon', 'assignfeedback_solutionsheet'),
+        new lang_string('fromnowon_help', 'assignfeedback_solutionsheet'),
+        1 // Default to on.
+        ));

@@ -84,6 +84,7 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
      * @return void
      */
     public function get_settings(MoodleQuickForm $mform) {
+        global $PAGE;
 
         $defaultshowattype = $this->get_config('showattype');
         $defaultshowattime = $this->get_config('showattime');
@@ -96,8 +97,13 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
 
         $showatgroup = array();
         $showatgroup[] = $mform->createElement('radio', 'assignfeedback_solutionsheet_showattype', null, get_string('no'), 0);
-        $showatgroup[] = $mform->createElement('radio', 'assignfeedback_solutionsheet_showattype', null,
-                                                get_string('yesimmediate', 'assignfeedback_solutionsheet'), 1);
+
+        if ($this->should_display_yesimmediate()) {
+            $PAGE->requires->js_call_amd('assignfeedback_solutionsheet/settings_form', 'init');
+            $showatgroup[] = $mform->createElement('radio', 'assignfeedback_solutionsheet_showattype', null,
+                get_string('yesimmediate', 'assignfeedback_solutionsheet'), 1);
+        }
+
         $showatgroup[] = $mform->createElement('radio', 'assignfeedback_solutionsheet_showattype', null,
                                                 get_string('yesfromprefix', 'assignfeedback_solutionsheet'), 2);
         $showatgroup[] = $mform->createElement('duration', 'assignfeedback_solutionsheet_showattime', '');
@@ -123,6 +129,29 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
                         get_string('hidesolutionsafter', 'assignfeedback_solutionsheet'),
                         array ('optional' => true) );
         $mform->setDefault('assignfeedback_solutionsheet_hideafter', $defaulthideafter);
+    }
+
+    /**
+     * Check if we should display "yesimmediate" radio option.
+     *
+     * @return bool|mixed
+     * @throws \dml_exception
+     */
+    protected function should_display_yesimmediate() {
+        if ($this->is_updating_assignment()) {
+            return true;
+        }
+
+        return get_config('assignfeedback_solutionsheet', 'fromnowon');
+    }
+
+    /**
+     * Check if we are updating an assignment.
+     *
+     * @return bool
+     */
+    protected function is_updating_assignment() {
+        return $this->assignment->has_instance();
     }
 
     /**
@@ -181,7 +210,7 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
             }
             if ($this->can_students_view_solutions()) {
                 // If students can see the solutions, we may want to hide them.
-                if (has_capability('moodle/course:manageactivities', $context)) {
+                if (has_capability('assignfeedback/solutionsheet:releasesolution', $context)) {
                     $o .= html_writer::div(
                                 $renderer->render($this->get_solutions_showhide_link(false)),
                                 'solutionshowhide');
@@ -190,7 +219,7 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
                 if ($this->can_view_solutions() && !$this->is_solution_hidden_again()) {
                     // Print a notice to teachers, and possibly a "show" link.
                     $s = get_string('solutionsnotforstudents', 'assignfeedback_solutionsheet');
-                    if (has_capability('moodle/course:manageactivities', $context)) {
+                    if (has_capability('assignfeedback/solutionsheet:releasesolution', $context)) {
                         $s .= $renderer->render($this->get_solutions_showhide_link(true));
                     }
                     $o .= html_writer::div($s, 'solutionshowhide');
@@ -312,19 +341,29 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
     }
 
     /**
-     * Construct a link for showing/hiding the solution sheet.
+     * Generate show / hide link for sultions.
      *
-     * @param bool $showit whether the link is for showing (true) or hiding (false)
-     * @return action_link
+     * @param bool $showit Determine which link to generate.
+     * @return moodle_url The show/ hide link.
      */
     private function get_solutions_showhide_link ($showit) {
         $params = array('cmid' => $this->assignment->get_course_module()->id,
                         'show' => $showit,
                         'sesskey' => sesskey() );
         $url = new moodle_url('/mod/assign/feedback/solutionsheet/showsolutions.php', $params);
-        $stringid = $showit ? 'doshowsolutions' : 'dohidesolutions';
+
+        if ($showit) {
+            $stringid = 'doshowsolutions';
+            $confirmid = 'confirmshowsolutions';
+        } else {
+            $stringid = 'dohidesolutions';
+            $confirmid = 'confirmhidesolutions';
+        }
+
         $text = get_string($stringid, 'assignfeedback_solutionsheet');
-        return new action_link($url, $text);
+        $action = new confirm_action(get_string($confirmid, 'assignfeedback_solutionsheet'));
+
+        return new action_link($url, $text, $action);
     }
 
     /**
