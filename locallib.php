@@ -93,7 +93,7 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
         $mform->addElement('filemanager', 'assignfeedback_solutionsheet_upload',
                         get_string('uploadsolutionsheets', 'assignfeedback_solutionsheet'),
                         null, array('subdirs' => 0) );
-        $mform->disabledIf('assignfeedback_solutionsheet_upload', 'assignfeedback_solutionsheet_enabled', 'notchecked');
+        $mform->hideIf('assignfeedback_solutionsheet_upload', 'assignfeedback_solutionsheet_enabled', 'notchecked');
 
         $showatgroup = array();
         $showatgroup[] = $mform->createElement('radio', 'assignfeedback_solutionsheet_showattype', null, get_string('no'), 0);
@@ -114,12 +114,8 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
 
         $mform->setDefault('assignfeedback_solutionsheet_showattype', $defaultshowattype);
         $mform->setDefault('assignfeedback_solutionsheet_showattime', $defaultshowattime);
-        $mform->disabledIf('assignfeedback_solutionsheet_showattype',
-                           'assignfeedback_solutionsheet_enabled', 'notchecked');
-        $mform->disabledIf('assignfeedback_solutionsheet_showattime[number]',
-                           'assignfeedback_solutionsheet_enabled', 'notchecked');
-        $mform->disabledIf('assignfeedback_solutionsheet_showattime[timeunit]',
-                           'assignfeedback_solutionsheet_enabled', 'notchecked');
+        $mform->hideIf('showatgroup',
+                'assignfeedback_solutionsheet_enabled', 'notchecked');
         $mform->disabledIf('assignfeedback_solutionsheet_showattime[number]',
                            'assignfeedback_solutionsheet_showattype', 'neq', '2');
         $mform->disabledIf('assignfeedback_solutionsheet_showattime[timeunit]',
@@ -129,6 +125,8 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
                         get_string('hidesolutionsafter', 'assignfeedback_solutionsheet'),
                         array ('optional' => true) );
         $mform->setDefault('assignfeedback_solutionsheet_hideafter', $defaulthideafter);
+        $mform->hideIf('assignfeedback_solutionsheet_hideafter',
+                'assignfeedback_solutionsheet_enabled', 'notchecked');
     }
 
     /**
