@@ -36,6 +36,7 @@ Feature: In an assignment, teachers can upload solution sheets
     And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     Then I should see "The solutions are not yet available"
+    And I should not see "Only students who made a submission can"
     And I should not see "solutionsheet.txt"
     And I log out
 
@@ -45,6 +46,7 @@ Feature: In an assignment, teachers can upload solution sheets
     Then I should see "Solution sheets"
     And I should see "solutionsheet.txt"
     And I should see "Students can not currently access the solutions"
+    And I should not see "Only students who made a submission can"
     And I should see "Click to show the solutions"
 
     When I follow "Click to show the solutions"
@@ -77,6 +79,7 @@ Feature: In an assignment, teachers can upload solution sheets
     And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     Then I should see "The solutions are not yet available"
+    And I should not see "Only students who made a submission can"
     And I should not see "solutionsheet.txt"
     And I log out
 

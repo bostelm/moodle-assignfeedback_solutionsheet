@@ -88,7 +88,8 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
 
         $defaultshowattype = $this->get_config('showattype');
         $defaultshowattime = $this->get_config('showattime');
-        $defaulthideafter  = $this->get_config('hideafter');
+        $defaultrequiresubmission = $this->get_config('requiresubmission');
+        $defaulthideafter = $this->get_config('hideafter');
 
         $mform->addElement('filemanager', 'assignfeedback_solutionsheet_upload',
                         get_string('uploadsolutionsheets', 'assignfeedback_solutionsheet'),
@@ -121,6 +122,14 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
         $mform->disabledIf('assignfeedback_solutionsheet_showattime[timeunit]',
                            'assignfeedback_solutionsheet_showattype', 'neq', '2');
 
+        $mform->addElement('advcheckbox', 'assignfeedback_solutionsheet_requiresubmission',
+                        get_string('requiresubmission', 'assignfeedback_solutionsheet'));
+        $mform->addHelpButton('assignfeedback_solutionsheet_requiresubmission',
+                              'requiresubmission', 'assignfeedback_solutionsheet');
+        $mform->setDefault('assignfeedback_solutionsheet_requiresubmission', $defaultrequiresubmission);
+        $mform->hideIf('assignfeedback_solutionsheet_requiresubmission',
+                       'assignfeedback_solutionsheet_enabled', 'notchecked');
+
         $mform->addElement('date_time_selector', 'assignfeedback_solutionsheet_hideafter',
                         get_string('hidesolutionsafter', 'assignfeedback_solutionsheet'),
                         array ('optional' => true) );
@@ -141,6 +150,15 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
         }
 
         return get_config('assignfeedback_solutionsheet', 'fromnowon');
+    }
+
+    /**
+     * Check whether students must make a submission before viewing the solutions.
+     *
+     * @return bool
+     */
+    protected function require_submission_to_view() {
+        return $this->get_config('requiresubmission');
     }
 
     /**
@@ -179,6 +197,7 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
         'assignfeedback_solutionsheet', ASSIGNFEEDBACK_SOLUTIONSHEET_FILEAREA, 0);
         $this->set_config('showattype', $formdata->assignfeedback_solutionsheet_showattype);
         $this->set_config('showattime', $formdata->assignfeedback_solutionsheet_showattime);
+        $this->set_config('requiresubmission', $formdata->assignfeedback_solutionsheet_requiresubmission);
         $this->set_config('hideafter', $formdata->assignfeedback_solutionsheet_hideafter);
         return true;
     }
@@ -196,7 +215,9 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
         if ($this->count_files() > 0) {
             $o .= $renderer->heading(get_string('solutions', 'assignfeedback_solutionsheet'), 3);
             $o .= $renderer->box_start();
-            if ($this->can_view_solutions()) {
+            $canview = $this->can_view_solutions();
+            $canviewanytime = has_capability('assignfeedback/solutionsheet:viewsolutionanytime', $context);
+            if ($canview) {
                 // Print links to the solution sheets.
                 $s = $this->assignment->render_area_files('assignfeedback_solutionsheet',
                                 ASSIGNFEEDBACK_SOLUTIONSHEET_FILEAREA, 0);
@@ -213,28 +234,33 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
                                 $renderer->render($this->get_solutions_showhide_link(false)),
                                 'solutionshowhide');
                 }
-            } else { // If students can't see the solutions...
-                if ($this->can_view_solutions() && !$this->is_solution_hidden_again()) {
-                    // Print a notice to teachers, and possibly a "show" link.
+            } else {
+                // If students can't see the solutions, print a notice to teachers, and possibly a "show" link.
+                if ($canview && !$this->is_solution_hidden_again()) {
                     $s = get_string('solutionsnotforstudents', 'assignfeedback_solutionsheet');
                     if (has_capability('assignfeedback/solutionsheet:releasesolution', $context)) {
                         $s .= $renderer->render($this->get_solutions_showhide_link(true));
                     }
                     $o .= html_writer::div($s, 'solutionshowhide');
                 }
-                // Print a notice to students as to when solutions will be available.
-                $msg = '';
-                if ($this->is_solution_hidden_again()) {
-                    $msg = get_string('solutionsnolonger', 'assignfeedback_solutionsheet');
-                } else {
-                    $avail = $this->get_solution_availability_time();
-                    if ($avail == -1) {
-                        $msg = get_string('solutionsnotyet', 'assignfeedback_solutionsheet');
-                    } else {
-                        $availtext = userdate($avail);
-                        $msg = get_string('solutionsfrom', 'assignfeedback_solutionsheet', $availtext);
-                    }
+            }
+            // Print a notice to students as to when solutions will be available.
+            $msg = '';
+            if ($this->is_solution_hidden_again()) {
+                $msg = get_string('solutionsnolonger', 'assignfeedback_solutionsheet');
+            } else {
+                $avail = $this->get_solution_availability_time();
+                if ($avail == -1) {
+                    $msg = get_string('solutionsnotyet', 'assignfeedback_solutionsheet');
+                } else if ($avail > 0) {
+                    $availtext = userdate($avail);
+                    $msg = get_string('solutionsfrom', 'assignfeedback_solutionsheet', $availtext);
                 }
+                if ($this->require_submission_to_view() && (!$canview || $canviewanytime)) {
+                    $msg .= ' ' . get_string('requiresubmissionmsg', 'assignfeedback_solutionsheet');
+                }
+            }
+            if ($msg) {
                 $o .= html_writer::tag('p', $msg);
             }
             $o .= $renderer->box_end();
@@ -249,12 +275,18 @@ class assign_feedback_solutionsheet extends assign_feedback_plugin {
      * @return boolean whether the current user can view solution sheets in the current context
      */
     public function can_view_solutions() {
+        global $USER;
+
         $context = $this->assignment->get_context();
         $canview = false;
         if (has_capability('assignfeedback/solutionsheet:viewsolutionanytime', $context)) {
             $canview = true;
         } else if (has_capability('assignfeedback/solutionsheet:viewsolution', $context)) {
             $canview = $this->can_students_view_solutions();
+            if ($canview && $this->require_submission_to_view()) {
+                $uinfo = $this->assignment->get_participant($USER->id);
+                $canview = $uinfo && $uinfo->submitted;
+            }
         }
         return $canview;
     }
