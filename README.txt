@@ -42,6 +42,15 @@ Current maintainer:
 
 === Release notes ===
 
+--- Version 3.5 ---
+
+Added features:
+
+* Stricter checks for releasing solution sheets: confirmation dialogue, 
+  specific capability; see CONTRIB-7136
+* Optionally, show solution sheet only to students who have made a submission;
+  see CONTRIB-7029
+
 --- Version 3.3 ---
 
 Minor fixes and updated behat tests.
