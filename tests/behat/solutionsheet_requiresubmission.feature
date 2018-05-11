@@ -48,7 +48,7 @@ Feature: In an assignment, students can see solutions only if they have made a s
     And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     Then I should see "The solutions are not yet available"
-    And I should see "Only students who made a submission can"
+    And I should see "Only students who made a submission will"
     And I should not see "solutionsheet.txt"
     And I log out
 
@@ -56,7 +56,7 @@ Feature: In an assignment, students can see solutions only if they have made a s
     And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     Then I should see "The solutions are not yet available"
-    And I should see "Only students who made a submission can"
+    And I should see "Only students who made a submission will"
     And I should not see "solutionsheet.txt"
     And I log out
 
@@ -82,7 +82,7 @@ Feature: In an assignment, students can see solutions only if they have made a s
     And I follow "Test assignment name"
     Then I should see "solutionsheet.txt"
     And I should not see "The solutions are not yet available"
-    And I should not see "Only students who made a submission can"
+    And I should not see "Only students who made a submission will"
     And I log out
 
     When I log in as "student2"
@@ -90,5 +90,5 @@ Feature: In an assignment, students can see solutions only if they have made a s
     And I follow "Test assignment name"
     Then I should not see "solutionsheet.txt"
     And I should not see "The solutions are not yet available"
-    And I should see "Only students who made a submission can"
+    And I should see "Only students who made a submission will"
     And I log out
