@@ -1,4 +1,4 @@
-@assignfeedback @assignfeedback_solutionsheet
+@assignfeedback @assignfeedback_solutionsheet @_file_upload
 Feature: In an assignment, students can see solutions only if they have made a submission
   In order to see solution sheets
   As a student
