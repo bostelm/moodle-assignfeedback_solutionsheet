@@ -42,6 +42,10 @@ Current maintainer:
 
 === Release notes ===
 
+--- Version 3.7 ---
+
+Maintenance relase only, no added features
+
 --- Version 3.5 ---
 
 Added features:
