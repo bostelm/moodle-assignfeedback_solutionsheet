@@ -8,6 +8,16 @@ Feature: In an assignment, teachers can not upload solution sheets without capab
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode |
       | Course 1 | C1 | 0 | 1 |
+    And the following "activity" exists:
+      | activity                            | assign                  |
+      | course                              | C1                      |
+      | name                                | Test assignment name    |
+      | intro                               | Questions here          |
+      | assignsubmission_onlinetext_enabled | 1                       |
+      | assignsubmission_file_enabled       | 0                       |
+      | attemptreopenmethod                 | manual                  |
+      | hidegrader                          | 1                       |
+      | submissiondrafts                    | 0                       |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
@@ -16,14 +26,8 @@ Feature: In an assignment, teachers can not upload solution sheets without capab
       | user | course | role |
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
-    And I log in as "teacher1"
-    And I am on "Course 1" course homepage with editing mode on
-    And I add a "Assignment" to section "1" and I fill the form with:
-      | Assignment name                  | Test assignment name  |
-      | Description                      | Questions here        |
-      | allowsubmissionsfromdate[year]   | 2009                  |
-    And I follow "Test assignment name"
-    And I navigate to "Edit settings" in current page administration
+    And I am on the "Test assignment name" Activity page logged in as teacher1
+    And I navigate to "Settings" in current page administration
     And I follow "Expand all"
     And I set the field "assignfeedback_solutionsheet_enabled" to "1"
     And I upload "mod/assign/feedback/solutionsheet/tests/fixtures/solutionsheet.txt" file to "Upload solution sheets" filemanager
@@ -37,9 +41,8 @@ Feature: In an assignment, teachers can not upload solution sheets without capab
       | capability                                                | permission |
       | assignfeedback/solutionsheet:releasesolution              | Prevent    |
     And I log out
-    When I log in as "teacher1"
-    And I am on "Course 1" course homepage
-    And I follow "Test assignment name"
+
+    When I am on the "Test assignment name" Activity page logged in as teacher1
     Then I should see "Solution sheets"
     And I should see "solutionsheet.txt"
     And I should see "Students can not currently access the solutions"
